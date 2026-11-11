@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ================= NAVBAR (shown after login) ================= -->
+  <nav id="navbar" class="navbar glass hidden">
+    <span class="brand">🧠 QuizApp</span>
+    <div class="nav-links">
+      <button class="nav-btn" data-page="quiz">Quiz</button>
+      <button class="nav-btn" data-page="leaderboard">Leaderboard</button>
+      <button class="nav-btn hidden" id="nav-admin" data-page="admin">Admin</button>
+      <button class="nav-btn logout" id="btn-logout">Logout</button>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- ================= 1. LOGIN / REGISTER PAGE ================= -->
+    <section id="page-auth" class="page glass card">
+      <h1 class="title">Welcome 👋</h1>
+      <p class="subtitle">Log in or create an account to start the quiz</p>
+
+      <div class="tabs">
+        <button class="tab active" id="tab-login">Login</button>
+        <button class="tab" id="tab-register">Register</button>
+      </div>
+
+      <form id="auth-form" autocomplete="off">
+        <input type="text" id="auth-username" placeholder="Username" required />
+        <input type="password" id="auth-password" placeholder="Password" required />
+        <button type="submit" class="btn primary" id="auth-submit">Login</button>
+      </form>
+      <p class="message error" id="auth-error"></p>
+      <p class="hint">Admin demo: <b>admin</b> / <b>admin123</b></p>
+    </section>
+
+    <!-- ================= 2. QUIZ PAGE ================= -->
+    <section id="page-quiz" class="page glass card hidden">
+      <div class="quiz-top">
+        <span id="quiz-counter">Question 1 / 10</span>
+        <span class="score-chip" id="quiz-score">Score: 0</span>
+      </div>
+
+      <!-- ===== OPTION A - NAYA CODE ADDED: Category + Timer ===== -->
+      <div style="display:flex; gap:10px; align-items:center; margin:12px 0; flex-wrap:wrap;">
+        <label><b>Category:</b></label>
+        <select id="category" style="padding:8px; border-radius:8px; flex:1;">
+          <option value="All">All</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="Python">Python</option>
+          <option value="GK">GK</option>
+          <option value="Science">Science</option>
+        </select>
+        <button class="btn primary" id="btn-start-category" style="padding:8px 14px;" onclick="startQuizTimer()">Start</button>
+        <h3 id="timer" style="color:red; margin:0; margin-left:auto;">30 sec</h3>
+      </div>
+      <!-- ===== NAYA CODE KHATAM ===== -->
+
+      <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+
+      <span class="category-tag" id="quiz-category"></span>
+      <h2 class="question" id="quiz-question">Loading...</h2>
+
+      <div class="options" id="quiz-options"></div>
+
+      <button class="btn primary" id="btn-next" disabled>Next</button>
+      <p class="message error" id="quiz-error"></p>
+    </section>
+
+    <!-- ================= 3. RESULT PAGE ================= -->
+    <section id="page-result" class="page glass card hidden center">
+      <h1 class="title">Quiz Complete 🎉</h1>
+      <div class="ring" id="result-ring"><span id="result-percent">0%</span></div>
+      <p class="big-score" id="result-score">0 / 0</p>
+      <p class="subtitle" id="result-message"></p>
+      <p class="hint" id="result-best"></p>
+      <div class="btn-row">
+        <button class="btn primary" id="btn-play-again">Play Again</button>
+        <button class="btn ghost" id="btn-to-board">Leaderboard</button>
+      </div>
+    </section>
+
+    <!-- ================= 4. LEADERBOARD PAGE ================= -->
+    <section id="page-leaderboard" class="page glass card hidden">
+      <h1 class="title">🏆 Leaderboard</h1>
+      <!-- ===== OPTION A - NAYA CODE ADDED: Chart ===== -->
+      <canvas id="myChart" style="max-height:250px; margin-bottom:15px;"></canvas>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Rank</th><th>Player</th><th>Best Score</th><th>Attempts</th></tr>
+          </thead>
+          <tbody id="board-body"></tbody>
+        </table>
+      </div>
+      <p class="message error" id="board-error"></p>
+    </section>
+
+    <!-- ================= 5. ADMIN PANEL ================= -->
+    <section id="page-admin" class="page glass card hidden">
+      <h1 class="title">⚙️ Admin Panel</h1>
+      <p class="subtitle">Add or delete quiz questions</p>
+
+      <form id="admin-form" autocomplete="off">
+        <input type="text" id="adm-question" placeholder="Question text" required />
+        <div class="grid-2">
+          <input type="text" id="adm-opt0" placeholder="Option A" required />
+          <input type="text" id="adm-opt1" placeholder="Option B" required />
+          <input type="text" id="adm-opt2" placeholder="Option C" required />
+          <input type="text" id="adm-opt3" placeholder="Option D" required />
+        </div>
+        <div class="grid-2">
+          <select id="adm-answer">
+            <option value="0">Correct: Option A</option>
+            <option value="1">Correct: Option B</option>
+            <option value="2">Correct: Option C</option>
+            <option value="3">Correct: Option D</option>
+          </select>
+          <input type="text" id="adm-category" placeholder="Category (e.g. Science)" />
+        </div>
+        <!-- ===== OPTION A - NAYA CODE ADDED: Difficulty + Time ===== -->
+        <div class="grid-2" style="margin-top:10px;">
+          <select id="adm-difficulty">
+            <option>Easy</option>
+            <option selected>Medium</option>
+            <option>Hard</option>
+          </select>
+          <input type="number" id="adm-time" placeholder="Time Limit (sec)" value="30" />
+        </div>
+        <button type="submit" class="btn primary">Add Question</button>
+      </form>
+      <p class="message" id="admin-msg"></p>
+
+      <h3 class="list-title">All Questions (<span id="adm-count">0</span>)</h3>
+      <div id="adm-list" class="adm-list"></div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+<script>
+let timeLeft = 30;
+let timeUp = false;
+let quizStarted = false;
+let lastQuestionText = "";
+
+function getQuestionText() {
+  let el = document.querySelector('#question') || document.querySelector('.question') || document.querySelector('h2') || document.querySelector('h3');
+  return el ? el.textContent.trim() : "";
+}
+
+function showStart() {
+  // Quiz pe wapas aaye to Start wapas lao, Timer roko
+  clearInterval(window.quizTimer);
+  quizStarted = false;
+  timeUp = false;
+  timeLeft = 30;
+  let s = document.getElementById('btn-start-category');
+  if (s) {
+    s.style.display = 'block';
+    s.style.pointerEvents = 'auto';
+    s.style.opacity = '1';
+    s.disabled = false;
+    s.removeAttribute('disabled');
+  }
+  let timerEl = document.getElementById('timer');
+  if (timerEl) timerEl.textContent = "Press Start";
+}
+
+function hideStart() {
+  let s = document.getElementById('btn-start-category');
+  if (s) s.style.display = 'none';
+}
+
+function getNextBtn() {
+  return Array.from(document.querySelectorAll('button, a, div')).find(b => {
+    let t = (b.textContent || "").toLowerCase().trim();
+    return t === 'next' || t.includes('next') || t.includes('skip') || t.includes('continue') || t.includes('agla');
+  });
+}
+
+function enableOptions(enable) {
+  document.querySelectorAll('button').forEach(function(b) {
+    if (b.id === 'btn-start-category') return;
+    let t = (b.textContent || "").toLowerCase();
+    if (t.includes('next')) return;
+    b.style.pointerEvents = enable ? 'auto' : 'none';
+    b.style.opacity = enable ? '1' : '0.5';
+  });
+}
+
+function goNextQuestion() {
+  let nextBtn = getNextBtn();
+  if (nextBtn) {
+    nextBtn.disabled = false;
+    nextBtn.removeAttribute('disabled');
+    nextBtn.style.pointerEvents = 'auto';
+    nextBtn.style.opacity = '1';
+    nextBtn.click();
+    return true;
+  }
+  let names = ['nextQuestion','loadNextQuestion','showNextQuestion','next','loadQuestion','showQuestion','displayQuestion','renderQuestion','goToNextQuestion'];
+  for (let n of names) {
+    if (typeof window[n] === 'function') {
+      try { window[n](); return true; } catch(e) {}
+    }
+  }
+  return false;
+}
+
+function resetTimer() {
+  clearInterval(window.quizTimer);
+  timeUp = false;
+  timeLeft = 30;
+  enableOptions(true);
+  lastQuestionText = getQuestionText();
+  let timerEl = document.getElementById('timer');
+  if (timerEl) timerEl.textContent = timeLeft + " sec";
+  window.quizTimer = setInterval(function() {
+    timeLeft--;
+    if (timerEl) timerEl.textContent = timeLeft + " sec";
+    if (timeLeft <= 0) {
+      clearInterval(window.quizTimer);
+      timeUp = true;
+      if (timerEl) timerEl.textContent = "Time Up!";
+      enableOptions(false);
+      setTimeout(function() {
+        if (!goNextQuestion()) {
+          let nb = getNextBtn();
+          if (nb) { nb.disabled = false; nb.style.pointerEvents = 'auto'; nb.style.opacity = '1'; }
+        }
+      }, 1000);
+    }
+  }, 1000);
+}
+
+function startQuizTimer() {
+  quizStarted = true;
+  hideStart();
+  resetTimer();
+}
+
+// Shuru me hi Start dikhao, Timer mat chalao
+showStart();
+
+let startBtn = document.getElementById('btn-start-category');
+if (startBtn) {
+  startBtn.addEventListener('click', function() {
+    quizStarted = true;
+    hideStart();
+    resetTimer();
+  });
+}
+
+// Jab Leaderboard / kisi aur feature pe jao to Timer roko, jab Quiz pe wapas aao to Start wapas lao
+document.addEventListener('click', function(e) {
+  let btn = e.target.closest('button, a, div');
+  if (!btn) return;
+  let t = (btn.textContent || "").toLowerCase();
+  let isNext = t.includes('next') || t.includes('skip') || t.includes('continue');
+  let isStart = btn.id === 'btn-start-category';
+
+  if (!isStart && !isNext) {
+    // Leaderboard, Home, Profile, Quiz waghera - kisi bhi menu pe click
+    if (t.includes('quiz')) {
+      // Quiz pe wapas aaye - Start wapas lao
+      setTimeout(showStart, 300);
+      return;
+    }
+    if (t.includes('leaderboard') || t.includes('home') || t.includes('profile') || t.includes('result') || t.includes('setting')) {
+      // Quiz chhor ke ja rahe ho - Timer roko
+      clearInterval(window.quizTimer);
+      quizStarted = false;
+      return;
+    }
+  }
+
+  if (timeUp && !isNext && !isStart) {
+    e.stopPropagation();
+    e.preventDefault();
+    return false;
+  }
+  if (isNext && !isStart) {
+    setTimeout(resetTimer, 500);
+  }
+}, true);
+
+// Dobara Login / Page wapas aane pe bhi Start dikhao
+window.addEventListener('pageshow', showStart);
+window.addEventListener('focus', function() {
+  if (!quizStarted) showStart();
+});
+
+setInterval(function() {
+  let q = getQuestionText();
+  if (q && lastQuestionText && q !== lastQuestionText && !timeUp && quizStarted) {
+    resetTimer();
+  }
+  if (q) lastQuestionText = q;
+}, 500);
+</script>
+</body>
+</html>
