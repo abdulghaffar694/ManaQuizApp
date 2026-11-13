@@ -1,0 +1,188 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "name": "admin",
+      "email": "admin@quiz.com",
+      "password": "$2b$10$44o5ACiGiHNvyROf0NXsAewJr27xBqRypqWayIEOobFt.zur12OwC",
+      "role": "admin",
+      "bestScore": 10,
+      "attempts": 1
+    },
+    {
+      "id": 2,
+      "username": "Ahad",
+      "name": "Ahad",
+      "email": "Ahad",
+      "password": "$2b$10$jxnySWT/cXxmb5whWJyMXeVNS0IYeVWEYUasGoAHP6p3T1zvu3Q0C",
+      "role": "student",
+      "bestScore": 8,
+      "attempts": 2
+    },
+    {
+      "id": 3,
+      "username": "Ali",
+      "name": "Ali",
+      "email": "Ali",
+      "password": "$2b$10$mPgIorwgRLWRV9cxV0KbdOEvuROgyp21fh9hbhU7wjfFTK0sT4fAC",
+      "role": "student",
+      "bestScore": 9,
+      "attempts": 1
+    },
+    {
+      "id": 4,
+      "username": "Yasir",
+      "name": "Yasir",
+      "email": "Yasir",
+      "password": "$2b$10$5b.nFWV/RuzJGsj49i4/Ne/xQzFWnbzvYURyz/1ipG1mzvRDWeE/y",
+      "role": "student",
+      "bestScore": 8,
+      "attempts": 1
+    },
+    {
+      "id": 5,
+      "username": "Zafar",
+      "name": "Zafar",
+      "email": "Zafar",
+      "password": "$2b$10$f3IraTnLTfB.dFITGFRe7.zf2sXu1vwenFv0BZ4jFvN5I1QBTotEC",
+      "role": "student",
+      "bestScore": 0,
+      "attempts": 0
+    },
+    {
+      "id": 6,
+      "username": "Zafar",
+      "name": "Zafar",
+      "email": "Zafar",
+      "password": "$2b$10$bAsR.j6ciU2/sHuqckNEPeLPPHKiiW6e/uaudBtBMLdPdn/TT9yDO",
+      "role": "student",
+      "bestScore": 6,
+      "attempts": 1
+    }
+  ],
+  "questions": [
+    {
+      "id": 6,
+      "question": "What is the Capital of Pakistan ?",
+      "options": [
+        "Lahore",
+        "Karachi",
+        "Islamabad",
+        "Quetta"
+      ],
+      "answer": 2,
+      "category": "GK"
+    },
+    {
+      "id": 7,
+      "question": "CPU stands for ?",
+      "options": [
+        "Central Processing Unit",
+        "Computer Power Unit",
+        "Central Process Unit",
+        "Control Program Unit"
+      ],
+      "answer": 0,
+      "category": "Computer"
+    },
+    {
+      "id": 8,
+      "question": "What is 5*6 ?",
+      "options": [
+        "25",
+        "30",
+        "35",
+        "40"
+      ],
+      "answer": 1,
+      "category": "Math"
+    },
+    {
+      "id": 9,
+      "question": "Which is an input device ?",
+      "options": [
+        "Monitor",
+        "Printer",
+        "Keyboard",
+        "Speaker"
+      ],
+      "answer": 2,
+      "category": "Computer"
+    },
+    {
+      "id": 10,
+      "question": "How many days in a week ?",
+      "options": [
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "answer": 2,
+      "category": "GK"
+    },
+    {
+      "id": 11,
+      "question": "Which is the largest Ocean ?",
+      "options": [
+        "Indian",
+        "Pacific",
+        "Altanic",
+        "Arctic"
+      ],
+      "answer": 1,
+      "category": "GK"
+    },
+    {
+      "id": 12,
+      "question": "HTML is used for ?",
+      "options": [
+        "Web pages",
+        "Gaming",
+        "Drawing",
+        "Typing"
+      ],
+      "answer": 0,
+      "category": "Computer"
+    },
+    {
+      "id": 13,
+      "question": "What is H2o ?",
+      "options": [
+        "Salt",
+        "Water",
+        "Sugar",
+        "Oxygen"
+      ],
+      "answer": 1,
+      "category": "Science"
+    },
+    {
+      "id": 14,
+      "question": "Which Organ pumps Blood ?",
+      "options": [
+        "Brain",
+        "Heart",
+        "Lungs",
+        "Liver"
+      ],
+      "answer": 1,
+      "category": "Science"
+    },
+    {
+      "id": 15,
+      "question": "What is square of 4 ?",
+      "options": [
+        "8",
+        "12",
+        "16",
+        "20"
+      ],
+      "answer": 2,
+      "category": "Math"
+    }
+  ],
+  "nextUserId": 7,
+  "nextQId": 16
+}
